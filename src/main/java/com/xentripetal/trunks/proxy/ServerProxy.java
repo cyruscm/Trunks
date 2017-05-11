@@ -4,7 +4,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import com.xentripetal.trunks.handlers.TerrainHandler;
+import com.xentripetal.trunks.handlers.GenBusHandler;
 
 public class ServerProxy extends CommonProxy {
 	public void preInit(FMLPreInitializationEvent e) {
