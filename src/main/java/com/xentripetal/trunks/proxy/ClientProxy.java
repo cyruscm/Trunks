@@ -1,15 +1,24 @@
 package com.xentripetal.trunks.proxy;
 
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+
 public class ClientProxy extends ServerProxy {
-	public void preInit() {
+
+	@Override
+	public void preInit(FMLPreInitializationEvent e) {
 		System.out.println("Client PreInit");
+
 	}
 
-	public void init() {
+	@Override
+	public void init(FMLInitializationEvent e) {
 		System.out.println("Client Init");
 	}
 
-	public void postInit() {
+	@Override
+	public void postInit(FMLPostInitializationEvent e) {
 		System.out.println("Client PostInit");
 	}
 }
