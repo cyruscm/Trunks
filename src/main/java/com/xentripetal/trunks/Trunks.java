@@ -1,6 +1,6 @@
 package com.xentripetal.trunks;
 
-import com.xentripetal.trunks.proxy.ServerProxy;
+import com.xentripetal.trunks.proxy.CommonProxy;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class Trunks {
 
 	@SidedProxy(clientSide=References.CLIENT_PROXY, serverSide = References.SERVER_PROXY)
-	public static ServerProxy proxy;
+	public static CommonProxy proxy;
 
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {

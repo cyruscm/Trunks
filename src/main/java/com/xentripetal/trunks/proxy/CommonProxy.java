@@ -1,27 +1,26 @@
 package com.xentripetal.trunks.proxy;
 
+import com.xentripetal.trunks.handlers.TerrainHandler;
+
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-public class ClientProxy extends CommonProxy {
+public class CommonProxy {
 
-	@Override
 	public void preInit(FMLPreInitializationEvent e) {
-		super.preInit(e);
-		System.out.println("Client PreInit");
+		System.out.println("Common PreInit");
+		MinecraftForge.TERRAIN_GEN_BUS.register(new TerrainHandler());
+
 
 	}
 
-	@Override
 	public void init(FMLInitializationEvent e) {
-		super.init(e);
-		System.out.println("Client Init");
+		System.out.println("Common Init");
 	}
 
-	@Override
 	public void postInit(FMLPostInitializationEvent e) {
-		super.postInit(e);
-		System.out.println("Client PostInit");
+		System.out.println("Common PostInit");
 	}
 }
