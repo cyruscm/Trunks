@@ -1,0 +1,16 @@
+[
+{
+  "modid": "xentrunks",
+  "name": "Trunks",
+  "description": "A simple mod that adds trunks to the bottom of non-modded trees.",
+  "version": "1.0.0",
+  "mcversion": "1.11.2",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Xentripetal"],
+  "credits": "Deadrik",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
