@@ -25,7 +25,7 @@ import net.minecraftforge.fml.common.registry.IForgeRegistry;
  */
 @SuppressWarnings("WeakerAccess")
 @ObjectHolder(References.MODID)
-public class Blocks {
+public class ModBlocks {
 
 	public static final BlockTrunk TRUNK = new BlockTrunk(Material.WOOD);
 

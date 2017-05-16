@@ -1,16 +1,13 @@
 package com.xentripetal.trunks.blocks;
 
-import java.util.Comparator;
 import java.util.Random;
-import java.util.stream.Stream;
 
 import com.xentripetal.trunks.References;
-import com.xentripetal.trunks.util.IVariant;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -31,7 +28,8 @@ import net.minecraft.world.World;
  * @author Choonster, Xentripetal
  */
 public class BlockTrunk extends Block {
-	public static final IProperty<EnumType> VARIANT = PropertyEnum.create("variant", EnumType.class);
+    public static final PropertyEnum<BlockPlanks.EnumType> VARIANT = PropertyEnum.<BlockPlanks.EnumType>create("variant", BlockPlanks.EnumType.class);
+
 
 	public BlockTrunk(Material materialIn) {
 		super(materialIn, materialIn.getMaterialMapColor());
@@ -39,6 +37,7 @@ public class BlockTrunk extends Block {
 		setUnlocalizedName(getRegistryName().toString());
         this.setHardness(6.0F);
         this.setSoundType(SoundType.WOOD);
+        this.setHarvestLevel("axe", 1);
 		
 	}
 	
@@ -49,20 +48,13 @@ public class BlockTrunk extends Block {
 
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        System.out.println(state.getProperties().toString());
-        Comparable<?> type = state.getProperties().get(VARIANT);
-        for (EnumType variants : EnumType.values()) {
-        	if (type.equals(variants)) {
-        		return variants.getItem();
-        	}
-        }
-    	return null;
+        if (state.getValue(VARIANT).getMetadata() < 4)
+        	return Item.getItemFromBlock(Blocks.LOG);
+        return Item.getItemFromBlock(Blocks.LOG2);
     }
 	
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
     {
-        int i = 4;
-        int j = 5;
 
         if (worldIn.isAreaLoaded(pos.add(-5, -5, -5), pos.add(5, 5, 5)))
         {
@@ -90,24 +82,25 @@ public class BlockTrunk extends Block {
 	@SuppressWarnings("deprecation")
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return getDefaultState().withProperty(VARIANT, EnumType.byMetadata(meta));
+		return getDefaultState().withProperty(VARIANT, BlockPlanks.EnumType.byMetadata(meta));
 	}
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		return state.getValue(VARIANT).getMeta();
+		return state.getValue(VARIANT).getMetadata();
 	}
+
 
 	@Override
 	public int damageDropped(IBlockState state) {
-		return 1;
+		return state.getValue(VARIANT).getMetadata() % 4;
 	}
 
 
 	@Override
 	public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
-		for (final EnumType enumType : EnumType.values()) {
-			list.add(new ItemStack(this, 1, enumType.getMeta()));
+		for (final BlockPlanks.EnumType enumType : BlockPlanks.EnumType.values()) {
+			list.add(new ItemStack(this, 1, enumType.getMetadata()));
 		}
 	}
 	
@@ -125,44 +118,8 @@ public class BlockTrunk extends Block {
 	public String getName(ItemStack stack) {
 		final int metadata = stack.getMetadata();
 
-		return EnumType.byMetadata(metadata).getName();
+		return BlockPlanks.EnumType.byMetadata(metadata).getName();
 	}
+	
 
-	public enum EnumType implements IVariant {
-		VARIANT_A(0, "oak", Item.getItemFromBlock(Blocks.LOG)),
-		VARIANT_B(1, "birch", Item.getItemFromBlock(Blocks.LOG2));
-
-		private static final EnumType[] META_LOOKUP = Stream.of(values()).sorted(Comparator.comparing(EnumType::getMeta)).toArray(EnumType[]::new);
-
-		private final int meta;
-		private final String name;
-		private final Item item;
-
-		EnumType(int meta, String name, Item item) {
-			this.meta = meta;
-			this.name = name;
-			this.item = item;
-		}
-
-		public int getMeta() {
-			return meta;
-		}
-		
-		public Item getItem() {
-			return item;
-		}
-
-		@Override
-		public String getName() {
-			return name;
-		}
-
-		public static EnumType byMetadata(int meta) {
-			if (meta < 0 || meta >= META_LOOKUP.length) {
-				meta = 0;
-			}
-
-			return META_LOOKUP[meta];
-		}
-	}
 }

@@ -11,10 +11,34 @@
 					"side": "minecraft:blocks/log_oak"
 				}
 			},
+			"spruce": {
+				"textures": {
+					"end": "minecraft:blocks/log_spruce_top",
+					"side": "minecraft:blocks/log_spruce"
+				}
+			},
 			"birch": {
 				"textures": {
 					"end": "minecraft:blocks/log_birch_top",
 					"side": "minecraft:blocks/log_birch"
+				}
+			},
+			"jungle": {
+				"textures": {
+					"end": "minecraft:blocks/log_jungle_top",
+					"side": "minecraft:blocks/log_jungle"
+				}
+			},
+			"acacia": {
+				"textures": {
+					"end": "minecraft:blocks/log_acacia_top",
+					"side": "minecraft:blocks/log_acacia"
+				}
+			},
+			"dark_oak": {
+				"textures": {
+					"end": "minecraft:blocks/log_big_oak_top",
+					"side": "minecraft:blocks/log_big_oak"
 				}
 			}
 		}

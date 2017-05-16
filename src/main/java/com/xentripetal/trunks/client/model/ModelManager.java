@@ -4,11 +4,12 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.ToIntFunction;
 
-import com.xentripetal.trunks.Blocks;
+import com.xentripetal.trunks.ModBlocks;
 import com.xentripetal.trunks.blocks.BlockTrunk;
 import com.xentripetal.trunks.util.IVariant;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.ItemMeshDefinition;
@@ -63,29 +64,15 @@ import net.minecraftforge.fml.relauncher.Side;
 		 */
 		private void registerBlockModels() {
 			registerVariantBlockItemModels(
-					Blocks.TRUNK.getDefaultState(),
-					BlockTrunk.VARIANT
+					ModBlocks.TRUNK.getDefaultState(),
+					BlockTrunk.VARIANT,
+					BlockPlanks.EnumType::getMetadata
 			);
 
 
-			Blocks.RegistrationHandler.ITEM_BLOCKS.stream().filter(item -> !itemsRegistered.contains(item)).forEach(this::registerItemModel);
+			ModBlocks.RegistrationHandler.ITEM_BLOCKS.stream().filter(item -> !itemsRegistered.contains(item)).forEach(this::registerItemModel);
 		}
 
-		/**
-		 * Register a single model for the {@link Block}'s {@link Item}.
-		 * <p>
-		 * Uses the registry name as the domain/path and the {@link IBlockState} as the variant.
-		 *
-		 * @param state The state to use as the variant
-		 */
-		private void registerBlockItemModel(IBlockState state) {
-			final Block block = state.getBlock();
-			final Item item = Item.getItemFromBlock(block);
-
-			if (item != Items.AIR) {
-				registerItemModel(item, new ModelResourceLocation(block.getRegistryName(), propertyStringMapper.getPropertyString(state.getProperties())));
-			}
-		}
 
 		/**
 		 * Register a model for a metadata value of the {@link Block}'s {@link Item}.
@@ -121,22 +108,6 @@ import net.minecraftforge.fml.relauncher.Side;
 			property.getAllowedValues().forEach(value -> registerBlockItemModelForMeta(baseState.withProperty(property, value), getMeta.applyAsInt(value)));
 		}
 
-		/**
-		 * Register a model for each metadata value of the {@link Block}'s {@link Item} corresponding to the values of an {@link IProperty}.
-		 * <p>
-		 * For each value:
-		 * <li>The domain/path is the registry name</li>
-		 * <li>The variant is {@code baseState} with the {@link IProperty} set to the value</li>
-		 * <p>
-		 * {@link IVariant#getMeta()} is used to get the metadata of each value.
-		 *
-		 * @param baseState The base state to use for the variant
-		 * @param property  The property whose values should be used
-		 * @param <T>       The value type
-		 */
-		private <T extends IVariant & Comparable<T>> void registerVariantBlockItemModels(IBlockState baseState, IProperty<T> property) {
-			registerVariantBlockItemModels(baseState, property, IVariant::getMeta);
-		}
 		
 
 		/**

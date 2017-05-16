@@ -6,8 +6,11 @@ import java.util.Queue;
 import com.xentripetal.trunks.blocks.BlockTrunk;
 import com.xentripetal.trunks.types.PosWorld;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockNewLog;
+import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.state.IBlockState;
-import com.xentripetal.trunks.Blocks;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -34,8 +37,20 @@ public class TrunkManager {
 	}
 	
 	private void replaceTree(World worldIn, BlockPos pos) {
-		IBlockState state = Blocks.TRUNK.getDefaultState().withProperty(BlockTrunk.VARIANT, BlockTrunk.EnumType.VARIANT_A);
-		worldIn.setBlockState(pos, state);
+		IBlockState state = trunkReplacement(worldIn.getBlockState(pos));
+		if (state != null) {
+			worldIn.setBlockState(pos, state, 3);
+		}
+	}
+	
+	private IBlockState trunkReplacement(IBlockState state) {
+		IBlockState toReturn = null;
+		if (Block.isEqualTo(state.getBlock(), Blocks.LOG)) {
+			toReturn = ModBlocks.TRUNK.getStateFromMeta(state.getValue(BlockOldLog.VARIANT).getMetadata());
+		} else if (Block.isEqualTo(state.getBlock(), Blocks.LOG2)) {
+			toReturn = ModBlocks.TRUNK.getStateFromMeta(state.getValue(BlockNewLog.VARIANT).getMetadata() + 4);
+		}
+		return toReturn;
 	}
 	
 	public void process() {
