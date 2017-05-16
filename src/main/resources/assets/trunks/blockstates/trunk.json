@@ -1,0 +1,22 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "trunks:trunk"
+	},
+	"variants": {
+		"variant": {
+			"oak": {
+				"textures": {
+					"end": "minecraft:blocks/log_oak_top",
+					"side": "minecraft:blocks/log_oak"
+				}
+			},
+			"birch": {
+				"textures": {
+					"end": "minecraft:blocks/log_birch_top",
+					"side": "minecraft:blocks/log_birch"
+				}
+			}
+		}
+	}
+}

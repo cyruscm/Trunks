@@ -1,5 +1,7 @@
 package com.xentripetal.trunks.proxy;
 
+import com.xentripetal.trunks.Blocks;
+
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;

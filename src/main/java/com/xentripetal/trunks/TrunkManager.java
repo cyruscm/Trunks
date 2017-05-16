@@ -3,8 +3,11 @@ package com.xentripetal.trunks;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import com.xentripetal.trunks.blocks.BlockTrunk;
 import com.xentripetal.trunks.types.PosWorld;
 
+import net.minecraft.block.state.IBlockState;
+import com.xentripetal.trunks.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -24,10 +27,15 @@ public class TrunkManager {
 	private boolean processFirstTree() {
 		PosWorld posWorld = treeCoords.poll();
 		if (posWorld != null) {
-			posWorld.getWorld().setBlockToAir(posWorld.getPos());
+			replaceTree(posWorld.getWorld(), posWorld.getPos());
 			return true;
 		}
 		return false;
+	}
+	
+	private void replaceTree(World worldIn, BlockPos pos) {
+		IBlockState state = Blocks.TRUNK.getDefaultState().withProperty(BlockTrunk.VARIANT, BlockTrunk.EnumType.VARIANT_A);
+		worldIn.setBlockState(pos, state);
 	}
 	
 	public void process() {
