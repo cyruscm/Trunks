@@ -5,7 +5,8 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
 
 /**
- * A hackish adapter that allows lambdas to be used as {@link ItemMeshDefinition} implementations without breaking ForgeGradle's
+ * A hackish adapter that allows lambdas to be used as
+ * {@link ItemMeshDefinition} implementations without breaking ForgeGradle's
  * reobfuscation and causing {@link AbstractMethodError}s.
  * <p>
  * Written by diesieben07 in this thread:

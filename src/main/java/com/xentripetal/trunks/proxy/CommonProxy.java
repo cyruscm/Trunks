@@ -1,6 +1,5 @@
 package com.xentripetal.trunks.proxy;
 
-import com.xentripetal.trunks.ModBlocks;
 import com.xentripetal.trunks.TrunkManager;
 import com.xentripetal.trunks.handlers.EventBusHandler;
 import com.xentripetal.trunks.handlers.GenBusHandler;
@@ -13,7 +12,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent e) {
-		
+
 	}
 
 	public void init(FMLInitializationEvent e) {

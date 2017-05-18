@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 @Mod(modid = References.MODID, name = References.NAME, version = References.VERSION)
 public class Trunks {
 
-	@SidedProxy(clientSide=References.CLIENT_PROXY, serverSide = References.SERVER_PROXY)
+	@SidedProxy(clientSide = References.CLIENT_PROXY, serverSide = References.SERVER_PROXY)
 	public static CommonProxy proxy;
 
 	@Mod.EventHandler
@@ -25,7 +25,7 @@ public class Trunks {
 	}
 
 	@Mod.EventHandler
-	public void postInit(FMLPostInitializationEvent event){
+	public void postInit(FMLPostInitializationEvent event) {
 		proxy.postInit(event);
 	}
 }

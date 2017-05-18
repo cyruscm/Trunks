@@ -19,11 +19,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.fml.common.registry.IForgeRegistry;
 
 /**
- * 
+ * ForgeEventBus Subscriber for registering blocks. 
  * @author choonster, xentripetal
- *
  */
-@SuppressWarnings("WeakerAccess")
 @ObjectHolder(References.MODID)
 public class ModBlocks {
 
