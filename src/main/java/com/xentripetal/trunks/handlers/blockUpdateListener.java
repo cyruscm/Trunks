@@ -21,15 +21,9 @@ import net.minecraft.world.World;
  */
 public class blockUpdateListener implements IWorldEventListener {
 
-	private TrunkManager trunkManager;
-
-	public blockUpdateListener(TrunkManager trunkManager) {
-		this.trunkManager = trunkManager;
-	}
-
 	public void notifyBlockUpdate(World worldIn, BlockPos pos, IBlockState oldState, IBlockState newState, int flags) {
-		if ( TrunkManager.isVanillaLog(newState.getBlock()) && TrunkManager.isSapling(oldState.getBlock())) {
-			trunkManager.replace(pos, worldIn);
+		if (TrunkManager.isValidSapling(oldState.getBlock())) {
+			TrunkManager.replaceLog(pos, worldIn, newState);
 		}
 	}
 

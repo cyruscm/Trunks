@@ -1,14 +1,5 @@
 package com.xentripetal.trunks;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.xentripetal.trunks.blocks.BlockTrunk;
-import com.xentripetal.trunks.types.PosWorld;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockNewLog;
 import net.minecraft.block.BlockOldLog;
@@ -23,55 +14,16 @@ import net.minecraft.world.World;
  * @author Xentripetal (xen@xentripetal.com)
  */
 public class TrunkManager {
-	private static final Log log =
-		LogFactory.getLog(TrunkManager.class);
 
-
-	private Queue<PosWorld> treeCoords;
-	private boolean processing;
-
-	public TrunkManager() {
-		treeCoords = new LinkedList<PosWorld>();
-	}
-
+	/**
+	 * Replaces the block at the provided position and world
+	 * if the block is a valid log.
+	 * @param worldIn World of block
+	 * @param pos Position of block
+	 * @return True if replaced
+	 */
 	public static boolean replaceLog(BlockPos pos, World worldIn) {
-	
-		return false;
-	}
-
-	public static boolean isVanillaLog(Block block) {
-		return (Block.isEqualTo(block, Blocks.LOG) || Block.isEqualTo(block, Blocks.LOG2));
-	}
-
-	public static boolean isSapling(Block block) {
-		return Block.isEqualTo(block, Blocks.SAPLING);
-	}
-
-
-	/**
-	 * Adds the provided pos and worldIn to the queue.
-	 * Note that the boolean does not validate if the pos
-	 * is actually a log block. It represents the internal
-	 * data structures offer response.
-	 * @param pos Position of block to replace
-	 * @param worldIn World of block to replace
-	 * @return Boolean if position was accepted
-	 */
-	public boolean add(BlockPos pos, World worldIn) {
-		return treeCoords.offer(new PosWorld(pos, worldIn));
-	}
-
-	/**
-	 * Handles the replacement of the first tree in queue.
-	 * @return True if there was a first tree, false if not
-	 */
-	private boolean processFirstTree() {
-		PosWorld posWorld = treeCoords.poll();
-		if (posWorld != null) {
-			replaceTree(posWorld.getWorld(), posWorld.getPos());
-			return true;
-		}
-		return false;
+		return replaceLog(pos, worldIn, worldIn.getBlockState(pos));
 	}
 
 
@@ -80,13 +32,18 @@ public class TrunkManager {
 	 * if the block is a valid log.
 	 * @param worldIn World of block
 	 * @param pos Position of block
+	 * @param state Block at pos state
+	 * @return True if replaced
 	 */
-	private void replaceTree(World worldIn, BlockPos pos) {
-		IBlockState state = trunkReplacement(worldIn.getBlockState(pos));
-		if (state != null) {
+	public static boolean replaceLog(BlockPos pos, World worldIn, IBlockState state) {
+		IBlockState newState = trunkReplacement(state);
+		if (newState != null) {
 			worldIn.setBlockState(pos, state, 3);
+			return true;
 		}
+		return false;
 	}
+
 
 	/**
 	 * Takes the provided state and generates a state for the
@@ -95,9 +52,9 @@ public class TrunkManager {
 	 * @param state State of block to check log
 	 * @return State of new trunk block
 	 */
-	private IBlockState trunkReplacement(Block block) {
+	private static IBlockState trunkReplacement(IBlockState state) {
 		IBlockState toReturn = null;
-		if (Block.isEqualTo(state., Blocks.LOG)) {
+		if (Block.isEqualTo(state.getBlock(), Blocks.LOG)) {
 			toReturn = ModBlocks.TRUNK.getStateFromMeta(state.getValue(BlockOldLog.VARIANT).getMetadata());
 		} else if (Block.isEqualTo(state.getBlock(), Blocks.LOG2)) {
 			toReturn = ModBlocks.TRUNK.getStateFromMeta(state.getValue(BlockNewLog.VARIANT).getMetadata() + 4);
@@ -105,17 +62,20 @@ public class TrunkManager {
 		return toReturn;
 	}
 
-
-	/**
-	 * Runs through all currently queued trees and replaces them
-	 */
-	public void process() {
-		if (!processing) {
-			processing = true;
-			while (processFirstTree()) {
-			}
-
-			processing = false;
-		}
+	public static boolean isValidLog(Block block) {
+		return isVanillaLog(block);
 	}
+
+	public static boolean isVanillaLog(Block block) {
+		return (Block.isEqualTo(block, Blocks.LOG) || Block.isEqualTo(block, Blocks.LOG2));
+	}
+
+	public static boolean isValidSapling(Block block) {
+		return isVanillaSapling(block);
+	}
+
+	public static boolean isVanillaSapling(Block block) {
+		return Block.isEqualTo(block, Blocks.SAPLING);
+	}
+
 }

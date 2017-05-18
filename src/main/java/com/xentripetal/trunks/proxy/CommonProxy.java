@@ -1,6 +1,5 @@
 package com.xentripetal.trunks.proxy;
 
-import com.xentripetal.trunks.TrunkManager;
 import com.xentripetal.trunks.handlers.EventBusHandler;
 import com.xentripetal.trunks.handlers.GenBusHandler;
 
@@ -16,9 +15,8 @@ public class CommonProxy {
 	}
 
 	public void init(FMLInitializationEvent e) {
-		TrunkManager trunkManager = new TrunkManager();
-		MinecraftForge.TERRAIN_GEN_BUS.register(new GenBusHandler(trunkManager));
-		MinecraftForge.EVENT_BUS.register(new EventBusHandler(trunkManager));
+		MinecraftForge.TERRAIN_GEN_BUS.register(new GenBusHandler());
+		MinecraftForge.EVENT_BUS.register(new EventBusHandler());
 	}
 
 	public void postInit(FMLPostInitializationEvent e) {
